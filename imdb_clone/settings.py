@@ -29,7 +29,7 @@ SECRET_KEY = "dsd!vcadrk3p&h%a8ij%c*o_c5r1%_&0azmlxx++jooe%f_e*("
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,7 +124,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/"),
+    os.path.join(BASE_DIR, "static"),
 )
+STATIC_ROOT =os.path.join(BASE_DIR, 'staticfiles')
+
+
 LOGIN_URL = '/login/'
 AUTH_USER_MODEL = "imdb_app.IMDbUser"
