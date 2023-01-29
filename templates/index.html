@@ -1,0 +1,87 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% comment %} TODO ADD SCROLL BUTTONS {% endcomment %}
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    <h1>Welcome to IMDb: The Internet Movie Database</h1>
+    {% if request.user.is_authenticated or request.user.is_superuser %}
+        <h4>Welcome back, <a href='/user/{{user.id}}'>{{ request.user.username }}</a>! </h4>    
+    {% endif %}
+    {% endblock %}
+    <div class="movies" id="darkMode">
+        
+        {% if request.user.is_authenticated and watchlist != '' %}
+            <section class="watchlist">
+                <header>
+                    <h2>Current Watchlist</h2>
+                </header>
+
+                <div class="cards">
+                    {% for movie in watchlist %}
+                        <div class="card">
+                            <a href="/movie_detail/{{ movie.id }}">
+                            <img class="movie" src="https://tiny.pictures/api/demo/?width=300&height=300&source={{movie.image}}" alt="{{ movie.title }}" loading="lazy">
+                            </a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endif %}
+
+        <section class="topTen">
+            <header>
+                <h2>Top 10 Movies</h2>
+            </header>
+
+            <div class="cards">
+                {% for movie in movies %}
+                    <div class="card">
+                        <a href="/movie_detail/{{ movie.id }}">
+                            <img class="movie" src="https://tiny.pictures/api/demo/?width=300&height=300&source={{movie.image}}" alt="{{ movie.title }}" loading="lazy">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section class="randomMovies">
+            <header>
+                <h2>Random Picks</h2>
+            </header>
+
+            <div class="cards">
+                {% for movie in random %}
+                    <div class="card">
+                        <a href="/movie_detail/{{ movie.id }}">
+                            <img class="movie" src="https://tiny.pictures/api/demo/?width=300&height=300&source={{movie.image}}" alt="{{ movie.title }}" loading="lazy">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+        
+        {% if request.user.is_authenticated and recently_viewed != '' %}
+            <section class="recentlyViewed">
+                <header>
+                    <h2>Recently Viewed</h2>
+                </header>
+                <div class="cards">
+                    
+                    {% for movie in recently_viewed %}
+                        <div class="card">
+                            <a href="/movie_detail/{{ movie.movie_id }}">
+                                <img class="movie" src="https://tiny.pictures/api/demo/?width=300&height=300&source={{movie.image}}" alt="{{ movie.title }}" loading="lazy">
+                            </a>
+                        </div>
+                    
+                    {% endfor %}
+            
+                </div>
+            </section>
+        {% endif %}
+    </div>
+</div>
+<br>
+</body>

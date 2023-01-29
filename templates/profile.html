@@ -1,0 +1,42 @@
+{% include 'navbar.html'%}
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+{% if not request.user.is_superuser %}
+
+<br><br>
+    {{ user.username }}'s Profile
+    <br><br>
+    Name: {{ user.first_name }} {{ user.last_name }}
+    <br>
+    Email: <a href='mailto:{{ user.email }}'>{{ user.email }}</a>
+    <br><br>
+    Seen It: 
+    <ul>
+    {% for movie in seen_movies %}
+        <li><a href='/movie_detail/{{movie.id}}'>{{ movie.title }}</a></li>
+    {% endfor %}
+    </ul>
+    <br>
+    Watchlist:
+    <ul>
+    {% for movie in want_list_movies %}
+         <li><a href='/movie_detail/{{movie.id}}'>{{ movie.title }}</a></li>
+    {% endfor %}
+    </ul>
+<br>
+{% if recently_viewed %}
+    Recently Viewed:
+    <ul>
+        {% for movie in recently_viewed %}
+            <li><a href='/movie_detail/{{ movie.movie_id }}/'>{{ movie.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% else %}
+    You are currently logged in as an administrator. <br><br>
+    Please <a href='/logout/'>log out</a> to access the profile of a user. <br><br>
+    <a href='/'>Return to homepage</a>
+
+{% endif %}

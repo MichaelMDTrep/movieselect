@@ -1,0 +1,92 @@
+{% load static %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+{% include 'navbar.html' %}
+{% block content %}
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        background-image: url('../images/wallhaven-j5dp2y.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+    }
+    .container {
+        width: 1280px;
+        margin: 70px auto 0;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .container .box {
+        position: relative;
+        width: 300px;
+        height: 300px;
+        background: #ff0;
+        margin: 10px;
+        box-sizing: border-box;
+        display: inline-block;
+    } 
+     .container .box .imgBox img {
+         position: relative;
+         max-width: 100%;
+         transition: transform 4s;
+         overflow: hidden;
+
+
+     }
+     .container .box:hover .imgBox img {
+         transform: scale(1.2);
+     }
+     .container .box .details {
+         position: absolute;
+         top: 10px;
+         left: 10px;
+         bottom: 10px;
+         right: 10px;
+         background: rgba(0, 0, 0, .8);
+         transform: scaleY(0);
+         transition: transform .5s;
+     }
+     .container .box:hover .details {
+         transform: scaleY(1);
+     }
+     .container .box .details .content {
+         position: absolute;
+         top: 50%;
+         transformation: translateY(-50%);
+         text-align: center;
+         padding: 15px;
+         color: #fff;
+         
+     }
+     .container .box .details .content { 
+         margin: 0;
+         padding: 0;
+         font-size: 20px;
+         color: #ff0;
+
+
+     }
+</style>
+
+<body>
+    <div class="container">
+    {% for movie in movies %}
+       <a href="/movie_detail/{{ movie.id }}"> <div class="box">
+            <div class="imgBox">
+                <img loading="lazy" src="{{ movie.image }}">
+            </div>
+            <div class="details">
+                <div class="content">
+                    <h2>{{ movie.title }}<h2>
+                </div>
+            </div>
+        </div>
+        </a>
+    {% endfor %}
+    </div>
+</body>
+{% endblock %}
+
+
